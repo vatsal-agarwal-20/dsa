@@ -31,7 +31,7 @@ public:
                 i++;
             else if(inorderVal[i]+inorderVal[j] >k)
                 j--;
-            else if(inorderVal[i]+inorderVal[j] ==k)
+            else 
                 return true;
         }
         return false;
