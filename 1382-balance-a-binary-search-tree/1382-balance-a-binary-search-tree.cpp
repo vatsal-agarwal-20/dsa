@@ -19,7 +19,7 @@ class Solution {
         inorder(root->right,in);
     }
     
-    TreeNode* balance(vector<int> in,int s, int e)
+    TreeNode* balance(vector<int> &in,int s, int e)
     {
         if(s>e)
             return NULL;
