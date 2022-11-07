@@ -32,6 +32,9 @@ public:
     }
 };
 
+/* 
+//Method 1
+
 void inorder(Node *root, vector<int> &in)
 {
     if (root == NULL)
@@ -82,9 +85,117 @@ Node *inorderToBST(vector<int> &in, int s, int e)
     root->right = inorderToBST(in, mid + 1, e);
     return root;
 }
+
+*/
+
+
+//Method 2
+void convertIntoSortedDLL(Node* root,Node* &head)
+{
+    if(root==NULL) return;
+    
+    convertIntoSortedDLL(root->right,head);
+    
+    root->right=head;
+    
+    if(head!=NULL)
+        head->left=root;
+    
+    head=root;
+    
+    convertIntoSortedDLL(root->left,head);
+}
+
+Node* mergeTwoSortedLL(Node* head1, Node* head2)
+{
+    Node* head=NULL;
+    Node* tail=NULL;
+    
+    while(head1!=NULL && head2!=NULL)
+    {
+        if(head1->data < head2->data)
+        {
+            if(head==NULL)
+            {
+                head=head1;
+                tail=head1;
+                head1=head1->right;
+            }
+            else{
+                tail->right=head1;
+                head1->left=tail;
+                tail=head1;
+                head1=head1->right;
+            }
+        }
+        else
+        {
+            if(head==NULL)
+            {
+                head=head2;
+                tail=head2;
+                head2=head2->right;
+            }
+            else{
+                tail->right=head2;
+                head2->left=tail;
+                tail=head2;
+                head2=head2->right;
+            }
+        }
+    }
+    while(head1!=NULL)
+    {
+                tail->right=head1;
+                head1->left=tail;
+                tail=head1;
+                head1=head1->right;
+    }
+    while(head2!=NULL)
+    {
+                tail->right=head2;
+                head2->left=tail;
+                tail=head2;
+                head2=head2->right;
+    }
+    return head;
+}
+
+int countNodes(Node* head)
+{
+    Node* temp=head;
+    int n=0;
+    while(temp!=NULL)
+    {
+        temp=temp->right;
+        n++;
+    }
+    return n;
+}
+Node* sortedLLToBST(Node* &head, int n)
+{
+    if(n<=0 || head==NULL)
+        return NULL;
+    
+    Node* left=sortedLLToBST(head,n/2);
+    
+    Node* root=head;
+    root->left=left;
+    
+    head=head->right;
+    
+    root->right=sortedLLToBST(head,n-n/2-1);
+    
+    return root;
+}
+
+
 Node *mergeBST(Node *root1, Node *root2)
 {
     // Write your code here.
+
+/*
+    //Method 1
 
     // Step 1
     vector<int> m;
@@ -98,4 +209,23 @@ Node *mergeBST(Node *root1, Node *root2)
 
     // Step 3
     return inorderToBST(mergeArray, 0, mergeArray.size() - 1);
+
+*/
+
+    //Method 2: Using DLL
+    
+    //Step 1
+    Node* head1=NULL;
+    convertIntoSortedDLL(root1,head1);
+    head1->left=NULL;
+    
+    Node* head2=NULL;
+    convertIntoSortedDLL(root2,head2);
+    head2->left=NULL;
+    
+    //Step 2
+    Node* head= mergeTwoSortedLL(head1,head2);
+    
+    //Step 3
+    return sortedLLToBST(head,countNodes(head));
 }
