@@ -97,6 +97,7 @@ class Solution {
         if(tree==NULL) return 0;
         
         int ans= 1+ countNodes(tree->left) + countNodes(tree->right);
+        return ans;
         
     }
     bool isCBT(struct Node* tree,int i,int n)
