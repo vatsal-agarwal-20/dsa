@@ -37,6 +37,8 @@ class Solution{
           
           priority_queue<Node*, vector<Node*>,compare> pq;
           
+          //Step 1: Creating minheap for starting elements of each list
+          // and also tracking the value of max and min
           for(int i=0;i<k;i++)
           {
               int element=KSortedArray[i][0];
@@ -47,19 +49,24 @@ class Solution{
           
           int start=mini; int end=maxi;
           
+          
+          // Step 2: Process ranges
           while(!pq.empty())
           {
+              // mini fetch
               Node* temp = pq.top();
               pq.pop();
               
               mini= temp->data;
               
+              // range or answer updation
               if(maxi-mini < end-start)
               {
                   end=maxi;
                   start=mini;
               }
               
+              // next element exists
               if(temp->col+1 < n)
               {
                   maxi=max(maxi,KSortedArray[temp->row][temp->col+1]);
@@ -67,6 +74,7 @@ class Solution{
                                                 temp->row,
                                                 temp->col+1));
               }
+              // next element does not exists
               else break;
           }
           return {start,end};
