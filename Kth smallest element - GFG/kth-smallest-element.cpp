@@ -19,10 +19,8 @@ class Solution{
         
         for(int i=0;i<k;i++)
         {
-            //step 1
             pq.push(arr[i]);
         }
-        //step 2
         for(int i=k;i<=r;i++)
         {
             if(arr[i]<pq.top())
