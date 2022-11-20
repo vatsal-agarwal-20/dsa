@@ -1,8 +1,21 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        while (nums[0] != nums[nums[0]])
-            swap(nums[0], nums[nums[0]]);
-        return nums[0];
+        int tortoise = nums[0];
+        int hare = nums[0];
+
+        do {
+            tortoise = nums[tortoise];
+            hare = nums[nums[hare]];
+        } while (tortoise != hare);
+        
+        // Find the "entrance" to the cycle.
+        tortoise = nums[0];
+        while (tortoise != hare) {
+            tortoise = nums[tortoise];
+            hare = nums[hare];
+        }
+        
+        return hare;
     }
 };
