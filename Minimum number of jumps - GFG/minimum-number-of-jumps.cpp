@@ -14,8 +14,8 @@ class Solution{
         int des=0;
         int jumps=0;
         
-        if(n==1) return 0;
-        if(arr[0]==0) return -1;
+        // if(n==1) return 0;
+        // if(arr[0]==0) return -1;
         
         for(int i=0;i<n-1;i++)
         {
@@ -27,7 +27,7 @@ class Solution{
                 jumps++;
             }
         }
-        if(des < n-1) return -1;
+        if(pos < n-1) return -1;
 
         return jumps;
     }
