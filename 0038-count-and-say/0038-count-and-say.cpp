@@ -1,10 +1,10 @@
 class Solution {
 public:
-    string countAndSay(int n) {
+    string countAndSay(int n, string s="1") {
         
-        if(n==1) return "1";
+        if(n==1) return s;
         
-        string s= countAndSay(n-1);
+        // string s= countAndSay(n-1);
         string res="";
         
         int counter=0;
@@ -17,6 +17,6 @@ public:
                 counter=0;
             }
         }
-        return res;
+        return countAndSay(n-1,res);
     }
 };
