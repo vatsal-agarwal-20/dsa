@@ -35,8 +35,7 @@ public:
         }
         prev->next=NULL;
         curr->next=head;
-        head=curr;
-        return head;
+        return curr;
     }
 };
 
