@@ -9,47 +9,20 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-
-//MORRIS TRAVERSAL as inorder
 class Solution {
+    void inorder(TreeNode* root, vector<int> &ans)
+    {
+        if(root==NULL) return;
+        inorder(root->left,ans);
+        ans.push_back(root->val);
+        inorder(root->right,ans);
+    }
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-        TreeNode* curNode = root;
-        vector<int> nodes;
         
-        while (curNode != NULL) 
-        {
-            if (curNode -> left) 
-            {
-						   //Find the inorder predecessor of current
-               //ifa) Make current as right child of the rightmost node in current's left subtree
-                TreeNode* predecessor = curNode -> left;
-                while (predecessor -> right && predecessor -> right != curNode) //second condition used when reverting
-                    predecessor = predecessor -> right;
-                
-                if ((predecessor -> right)==NULL) 
-                {
-                    predecessor -> right = curNode;
-                    curNode = curNode -> left; //ifb) Go to this left child
-                }
-                else 
-                {
-                    //Revert back the changes
-                    predecessor -> right = NULL;
-                    nodes.push_back(curNode -> val);
-                    //cout<<curNode->val<<endl;
-                    curNode = curNode -> right;
-                }
-            }
-            else 
-            {
-                nodes.push_back(curNode -> val);  //ea)
-                //cout<<curNode->val<<endl;
-                curNode = curNode -> right;  //eb)
-            }
-        }
+        vector<int> ans;
         
-        return nodes;
+        inorder(root,ans);
+        return ans;
     }
 };
