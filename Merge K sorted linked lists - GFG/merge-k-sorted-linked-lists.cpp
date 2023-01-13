@@ -42,59 +42,52 @@ struct Node
 	
 };
 */ 
-class compare{
-  public:
-  bool operator()(Node* a , Node* b)
-  {
-      return a->data > b->data;
-  }
-};
+
 class Solution{
+    Node* merge(Node* a, Node* b)
+    {
+        if(a==NULL) return b;
+        else if(b==NULL) return a;
+        
+        Node* res=NULL;
+        
+        if(a->data <= b->data)
+        {
+            res=a;
+            res->next=merge(a->next,b);
+        }
+        else
+        {
+            res=b;
+            res->next=merge(a,b->next);
+        }
+        return res;
+    }
   public:
     //Function to merge K sorted linked list.
     Node * mergeKLists(Node *arr[], int K)
     {
            // Your code here
-           priority_queue<Node*, vector<Node*>, compare> pq;
+           int i=0;
+           int last=K-1;
+           int j;
            
-           if(K==0) return NULL;
-           
-           //Step 1: 
-           for(int i=0;i<K;i++)
+           while(last != 0)
            {
-               if(arr[i]!=NULL)
+               i=0;
+               j=last;
+               while(i<j)
                {
-                   pq.push(arr[i]);
-               }
-           }
-           
-           Node* head=NULL;
-           Node* tail=NULL;
-           
-           while(pq.size()>0)
-           {
-               Node* top=pq.top();
-               pq.pop();
-               
-               if(top->next !=NULL)
+                   arr[i]=merge(arr[i],arr[j]);
+                   i++;
+                   j--;
+                   if(i>=j)
                    {
-                       pq.push(top->next);
+                       last=j;
                    }
-               if(head==NULL)
-               {
-                   // Answer LL is empty
-                   head=top;
-                   tail=top;
-                   
-               }
-               else
-               {
-                   // insert at LL
-                   tail->next=top;
-                   tail=top;
                }
            }
-           return head;
+           return arr[0];
     }
 };
 
