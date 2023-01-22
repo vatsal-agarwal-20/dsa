@@ -96,43 +96,54 @@ int main()
 }
 // } Driver Code Ends
 
+
+/* BST Node
+struct Node
+{
+	int key;
+	struct Node *left, *right;
+};
+*/
+
+// This function finds predecessor and successor of key in BST.
+// It sets pre and suc as predecessor and successor respectively
 void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
 {
-    if (root == NULL)  return ;
- 
-   
-    if (root->key == key)
+
+// Your code goes here
+if(root==NULL) return;
+
+if(root->key == key)
+{
+    if(root->left!=NULL)
     {
-        
-        if (root->left != NULL)
+        Node* temp=root->left;
+        while(temp->right)
         {
-            Node* tmp = root->left;
-            while (tmp->right)
-                tmp = tmp->right;
-            pre = tmp ;
+            temp=temp->right;
         }
- 
-        
-        if (root->right != NULL)
+        pre=temp;
+    }
+    if(root->right!=NULL)
+    {
+        Node* temp=root->right;
+        while(temp->left)
         {
-            Node* tmp = root->right ;
-            while (tmp->left)
-                tmp = tmp->left ;
-            suc = tmp ;
+            temp=temp->left;
         }
-        return ;
+        suc=temp;
     }
- 
-    
-    if (root->key > key)
-    {
-        suc = root ;
-        findPreSuc(root->left, pre, suc, key) ;
-    }
-    else 
-    {
-        pre = root ;
-        findPreSuc(root->right, pre, suc, key) ;
-    }
+    return;
+}
+if(root->key > key)
+{
+    suc=root;
+    findPreSuc(root->left,pre,suc,key);
+}
+else
+{
+    pre=root;
+    findPreSuc(root->right,pre,suc,key);
+}
 
 }
