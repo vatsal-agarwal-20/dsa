@@ -92,34 +92,30 @@ struct Node {
 */
 
 class Solution {
-    //Following Inorder Traversal
-    int solve(Node* root,int &i,int k)
-    {
-        if(root==NULL)
-        return -1;
-        
-        int left=solve(root->left,i,k);
-        
-        //Left
-        if(left != -1)
-        {
-            return left;
-        }
-        
-        //Node
-        i++;
-        if(i==k)
-        return root->data;
-        
-        //Right
-        return solve(root->right,i,k);
-    }
   public:
+  int ans= -1;
+  void solve(Node* root, int K, int &i)
+  {
+      if(root==NULL) return;
+      
+      solve(root->left,K,i);
+      i++;
+      
+      if(i== K)
+      {
+          ans=root->data;
+          return;
+      }
+      
+      solve(root->right,K,i);
+  }
     // Return the Kth smallest element in the given BST
     int KthSmallestElement(Node *root, int K) {
         // add code here.
+        ans= -1;
         int i=0;
-        return solve(root,i,K);
+        solve(root,K,i);
+        return ans;
     }
 };
 
