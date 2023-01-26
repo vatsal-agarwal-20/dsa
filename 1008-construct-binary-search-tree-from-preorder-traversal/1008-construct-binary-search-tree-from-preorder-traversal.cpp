@@ -10,31 +10,21 @@
  * };
  */
 class Solution {
-    TreeNode* insertIntoBST(TreeNode* root,int d)
-    {
-        if(root==NULL)
-        {
-            root=new TreeNode(d);
-            return root;
-        }
-        if(d> root->val)
-        {
-            root->right= insertIntoBST(root->right,d);
-        }
-        else
-        {
-            root->left= insertIntoBST(root->left,d);
-        }
-        return root;
-    }
+    
 public:
-    TreeNode* bstFromPreorder(vector<int>& preorder) {
-        // sort(preorder.begin(),preorder.end());
-        TreeNode* root=NULL;
-        for(int i=0;i<preorder.size();i++)
+    int i=0;
+    TreeNode* bstFromPreorder(vector<int>& preorder, int parentVal=INT_MAX) {
+        
+        if(i >= preorder.size() || preorder[i] > parentVal)
         {
-            root = insertIntoBST(root,preorder[i]);
+            return NULL;
         }
-        return root;
+        int currVal = preorder[i++];
+        TreeNode* temp = new TreeNode(currVal);
+        
+        temp->left = bstFromPreorder(preorder, currVal);
+        temp->right= bstFromPreorder(preorder, parentVal);
+        
+        return temp;
     }
 };
