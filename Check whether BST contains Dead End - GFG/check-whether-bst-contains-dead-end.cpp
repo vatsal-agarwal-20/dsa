@@ -102,28 +102,15 @@ Node * right, * left;
 };*/
 
 /*You are required to complete below method */
-void solve(Node* root, unordered_map<int,bool> &m, bool &ans)
+bool solve(Node* root, int low, int high)
 {
-    if(root==NULL) return;
-    m[root->data]=true;
+    if(root==NULL) return false;
+    if(low == high) return true;
     
-    if(root->left ==NULL && root->right == NULL)
-    {
-        if((m[root->data - 1] && m[root->data + 1]) || (root->data == 1 && m[root->data + 1]))
-        {
-            ans=true;
-            return ;
-        }
-    }
-    
-    solve(root->left,m,ans);
-    solve(root->right,m,ans);
+    return solve(root->left,low,root->data-1) || solve(root->right,root->data + 1, high);
 }
 bool isDeadEnd(Node *root)
 {
     //Your code here
-    unordered_map<int,bool> m;
-    bool ans=false;
-    solve(root,m,ans);
-    return ans;
+    return solve(root,1,INT_MAX);
 }
