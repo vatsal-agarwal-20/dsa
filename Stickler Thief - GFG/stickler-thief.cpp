@@ -30,20 +30,38 @@ class Solution
     //     return dp[n];
     // }
     
-    int solveTab(int arr[], int n)
+    // int solveTab(int arr[], int n)
+    // {
+    //     vector<int> dp(n);
+    //     dp[0]= arr[0];
+        
+    //     for(int i=1;i<n;i++)
+    //     {
+    //         int incl = dp[i-2]+arr[i];
+    //         int excl = dp[i-1]+0;
+            
+    //         dp[i]=max(incl,excl);
+    //     }
+        
+    //     return dp[n-1];
+    // }
+    
+    int solveSpace(int arr[], int n)
     {
-        vector<int> dp(n);
-        dp[0]= arr[0];
+        int prev2 = 0;
+        int prev1 = arr[0];
         
         for(int i=1;i<n;i++)
         {
-            int incl = dp[i-2]+arr[i];
-            int excl = dp[i-1]+0;
+            int incl = prev2+arr[i];
+            int excl = prev1+0;
             
-            dp[i]=max(incl,excl);
+            int ans = max(incl,excl);
+            prev2=prev1;
+            prev1=ans;
         }
         
-        return dp[n-1];
+        return prev1;
     }
     public:
     //Function to find the maximum money the thief can get.
@@ -55,7 +73,9 @@ class Solution
         // vector<int> dp(n, -1);
         // return solveMem(arr,dp,n-1);
         
-        return solveTab(arr,n);
+        // return solveTab(arr,n);
+        
+        return solveSpace(arr,n);
     }
 };
 
