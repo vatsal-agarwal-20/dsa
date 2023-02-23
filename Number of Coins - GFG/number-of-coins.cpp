@@ -47,6 +47,26 @@ class Solution{
         dp[x]=mini;
         return mini;
     }
+    
+    int solveTab(int coins[], int x, int n)
+    {
+        vector<int> dp(x+1, INT_MAX);
+        
+        dp[0]=0;
+        for(int i=1;i<=x;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(i-coins[j] >=0 && dp[i-coins[j]] != INT_MAX)
+                {
+                    dp[i]= min(dp[i], 1+ dp[i-coins[j]]);
+                }
+            }
+        }
+        if(dp[x] == INT_MAX) return -1;
+        
+        return dp[x];
+    }
 
 	public:
 	int minCoins(int coins[], int M, int V) 
@@ -57,11 +77,13 @@ class Solution{
 	    
 	   // return ans;
 	   
-	   vector<int> dp(V+1, -1);
-	   int ans= solveMem(coins,dp,V,M);
+	   //vector<int> dp(V+1, -1);
+	   //int ans= solveMem(coins,dp,V,M);
 	   
-	   if(ans== INT_MAX) return -1;
-	   else return ans;
+	   //if(ans== INT_MAX) return -1;
+	   //else return ans;
+	   
+	   return solveTab(coins,V,M);
 	} 
 	  
 };
