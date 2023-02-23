@@ -5,7 +5,7 @@ using namespace std;
 // } Driver Code Ends
 // User function template for C++
 class Solution{
-    bool solve(string &pattern, string &wild, int i, int j)
+    bool solve(string &pattern, string &wild, int i, int j, vector<vector<int>> &dp)
     {
         if(i<0 && j<0) return true;
         if(i>=0 && j<0) return false;
@@ -18,13 +18,15 @@ class Solution{
             return true;
         }
         
+        if(dp[i][j] != -1) return dp[i][j];
+        
         if(pattern[i] == wild[j] || wild[j]=='?')
         {
-            solve(pattern,wild,i-1,j-1);
+            return dp[i][j] = solve(pattern,wild,i-1,j-1,dp);
         }
         else if(wild[j] == '*')
         {
-            return (solve(pattern,wild,i-1,j) || solve(pattern,wild,i,j-1));
+            return dp[i][j] = (solve(pattern,wild,i-1,j,dp) || solve(pattern,wild,i,j-1,dp));
         }
         else return false;
     }
@@ -32,7 +34,8 @@ class Solution{
     bool match(string wild, string pattern)
     {
         // code here
-        return solve(pattern,wild,pattern.length()-1,wild.length()-1);
+        vector<vector<int>> dp(pattern.length(), vector<int>(wild.length(), -1));
+        return solve(pattern,wild,pattern.length()-1,wild.length()-1,dp);
     }
 };
 
