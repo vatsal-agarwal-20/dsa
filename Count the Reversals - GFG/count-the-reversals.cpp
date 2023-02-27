@@ -20,7 +20,6 @@ int main()
 
 int countRev (string s)
 {
-    // your code here
     int l=s.length();
     if(l & 1) return -1;
     
