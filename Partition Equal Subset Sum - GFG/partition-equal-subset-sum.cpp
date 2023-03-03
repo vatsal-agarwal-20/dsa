@@ -34,6 +34,56 @@ class Solution{
         
         return dp[idx][target] = incl || excl;
     }
+    
+    bool solveTab(int arr[], int n, int total)
+    {
+        vector<vector<int>> dp(n+1, vector<int>(total+1, 0));
+        
+        for(int i=0;i<=n;i++)
+        {
+            dp[i][0]=1;
+        }
+        
+        for(int index=n-1;index >=0; index--)
+        {
+            for(int target=0;target<=total/2;target++)
+            {
+                bool incl=0;
+                if(target-arr[index] >=0) 
+                incl = dp[index+1][target - arr[index]];
+                
+                bool excl = dp[index+1][target - 0];
+
+                dp[index][target] = incl || excl;
+            }
+        }
+        return dp[0][total/2];
+    }
+    bool solveSpace(int arr[], int n, int total)
+    {
+        vector<int> curr(total/2 + 1, 0);
+        vector<int> next(total/2 + 1, 0);
+        
+        curr[0]=1;
+        next[0]=1;
+        
+        for(int index=n-1;index >=0; index--)
+        {
+            for(int target=0;target<=total/2;target++)
+            {
+                bool incl=0;
+                if(target-arr[index] >=0) 
+                incl = next[target - arr[index]];
+                
+                bool excl = next[target - 0];
+
+                curr[target] = incl || excl;
+            }
+            next=curr;
+        }
+        return next[total/2];
+    }
+
 public:
     int equalPartition(int N, int arr[])
     {
@@ -49,8 +99,11 @@ public:
         
         // return solve(arr,N,0,target);
         
-        vector<vector<int>> dp(N, vector<int>(target+1, -1));
-        return solveMem(arr,N,0,target,dp);
+        // vector<vector<int>> dp(N, vector<int>(target+1, -1));
+        // return solveMem(arr,N,0,target,dp);
+        
+        // return solveTab(arr,N, totalSum);
+        return solveSpace(arr,N, totalSum);
     }
 };
 
