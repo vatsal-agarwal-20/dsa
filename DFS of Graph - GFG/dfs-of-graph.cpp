@@ -4,15 +4,17 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-    void solve(vector<int> adj[],unordered_map<int,bool> &visited, vector<int> &ans, int node)
+    void solve(vector<int> adj[], unordered_map<int,bool> &vis, vector<int> &ans, int node)
     {
+        vis[node] = true;
         ans.push_back(node);
-        visited[node]=1;
         
         for(auto i: adj[node])
         {
-            if(!visited[i])
-            solve(adj,visited,ans,i);
+            if(!vis[i])
+            {
+                solve(adj,vis,ans,i);
+            }
         }
     }
   public:
@@ -20,15 +22,9 @@ class Solution {
     vector<int> dfsOfGraph(int V, vector<int> adj[]) {
         // Code here
         vector<int> ans;
-        unordered_map<int,bool> visited;
+        unordered_map<int,bool> vis;
         
-        for(int i=0;i<V;i++)
-        {
-            if(!visited[i])
-            {
-                solve(adj,visited,ans,i);
-            }
-        }
+        solve(adj,vis,ans,0);
         return ans;
     }
 };
