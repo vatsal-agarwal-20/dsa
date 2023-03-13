@@ -3,6 +3,7 @@
 using namespace std;
 
 // } Driver Code Ends
+
 class Solution
 {
     void solve(vector<int> adj[],vector<bool> &visited,stack<int> &s,int node)
@@ -41,6 +42,8 @@ class Solution
 	    }
 	    return ans;
 	}
+
+
 };
 
 //{ Driver Code Starts.
