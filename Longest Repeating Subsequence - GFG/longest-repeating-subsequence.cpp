@@ -7,7 +7,7 @@ class Solution {
 	public:
 		int LongestRepeatingSubsequence(string str){
 		    // Code here
-		    int n= str.length();
+		    int n = str.length();
 		    int dp[n+1][n+1];
 		    
 		    for(int i=0;i<=n;i++)
@@ -18,14 +18,11 @@ class Solution {
 		            {
 		                dp[i][j]=0;
 		            }
-		            else if(str[i-1] == str[j-1] && i != j)
-		            {
-		                dp[i][j] = dp[i-1][j-1] + 1;
-		            }
+		            else if(str[i-1] == str[j-1] && i != j) 
+		            dp[i][j] = dp[i-1][j-1] + 1;
+		            
 		            else
-		            {
-		                dp[i][j]= max(dp[i-1][j], dp[i][j-1]);
-		            }
+		            dp[i][j] = max(dp[i-1][j],dp[i][j-1]);
 		        }
 		    }
 		    return dp[n][n];
