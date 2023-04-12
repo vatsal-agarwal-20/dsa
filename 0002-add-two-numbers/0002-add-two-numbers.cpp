@@ -11,52 +11,53 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode* ansHead = new ListNode();
-        ListNode* temp = ansHead;
+        ListNode* curr1 = l1;
+        ListNode* curr2 = l2;
+        ListNode* ans = new ListNode(NULL);
+        ListNode* curr3=ans;
+        
         int carry=0;
-        while(l1!=NULL && l2!=NULL)
+        while(curr1!=NULL && curr2!=NULL)
         {
-            int sum=l1->val+l2->val+carry;
+            int sum=curr1->val + curr2->val + carry;
             carry = sum/10;
             sum=sum%10;
+            ListNode* temp = new ListNode(sum);
+            ans->next=temp;
+            ans=ans->next;
             
-            ListNode* newSum = new ListNode(sum);
-            temp->next=newSum;
-            temp=temp->next;
-            
-            l1=l1->next;
-            l2=l2->next;
+            curr1 = curr1->next;
+            curr2 = curr2->next;
         }
-        while(l1!=NULL)
+        while(curr1 != NULL)
         {
-            int sum=l1->val+carry;
+            int sum=curr1->val + carry;
             carry = sum/10;
             sum=sum%10;
+            ListNode* temp = new ListNode(sum);
+            ans->next=temp;
+            ans=ans->next;
             
-            ListNode* newSum = new ListNode(sum);
-            temp->next=newSum;
-            temp=temp->next;
-            
-            l1=l1->next;
+            curr1 = curr1->next;
         }
-        while(l2!=NULL)
+        while(curr2 != NULL)
         {
-            int sum=l2->val+carry;
+            int sum= curr2->val + carry;
             carry = sum/10;
             sum=sum%10;
+            ListNode* temp = new ListNode(sum);
+            ans->next=temp;
+            ans=ans->next;
             
-            ListNode* newSum = new ListNode(sum);
-            temp->next=newSum;
-            temp=temp->next;
-            
-            l2=l2->next;
+            curr2 = curr2->next;
         }
-        if(carry > 0)
+        if(carry != 0)
         {
-            ListNode* newSum = new ListNode(carry);
-            temp->next=newSum;
-            temp=temp->next;
+            ListNode* temp = new ListNode(carry);
+            ans->next=temp;
+            ans=ans->next;
         }
-        return ansHead->next;
+        curr3=curr3->next;
+        return curr3;
     }
 };
